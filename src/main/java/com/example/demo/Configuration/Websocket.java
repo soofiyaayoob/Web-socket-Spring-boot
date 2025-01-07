@@ -17,7 +17,7 @@ public class Websocket implements WebSocketMessageBrokerConfigurer{
 
 	    @Override
 	    public void registerStompEndpoints(StompEndpointRegistry registry) {
-	        registry.addEndpoint("/ws") .withSockJS(); //this for if the connection failed 
+	    	registry.addEndpoint("/javatechie").withSockJS();//this for if the connection failed 
 	                                                          //itwill connect through http 
 	    }
 }
