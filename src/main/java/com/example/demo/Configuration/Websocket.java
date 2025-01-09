@@ -12,12 +12,13 @@ public class Websocket implements WebSocketMessageBrokerConfigurer{
 	 @Override
 	    public void configureMessageBroker(MessageBrokerRegistry config) {
 	        config.enableSimpleBroker("/topic"); // Enables in-memory message broker
-	        config.setApplicationDestinationPrefixes("/app"); // Prefix for client messages//or any url
+	        config.setApplicationDestinationPrefixes("/app"); // Prefix for client messages or any url
 	    }
 
 	    @Override
 	    public void registerStompEndpoints(StompEndpointRegistry registry) {
-	    	registry.addEndpoint("/javatechie").withSockJS();//this for if the connection failed 
+	    	registry.addEndpoint("/soofiya").withSockJS();//this for if the connection failed 
 	                                                          //itwill connect through http 
+	    	//set allwoed orgins("*") //what is host or port client will run for now everyone access the backend
 	    }
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>STOMP over WebSocket</title>
+</head>
+<body>
+    <h1>STOMP Messaging</h1>
+    
+    <!-- Add a status element to display connection status -->
+    <div id="status"></div>
+
+    <input type="text" id="message" placeholder="Type a message" />
+    <button id="sendButton" onclick="sendMessage()" disabled>Send</button>
+
+    <div id="output"></div>
+
+    <!-- Load SockJS and STOMP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <script>
+        const socket = new SockJS('/soofiya'); // Ensure this URL matches your backend WebSocket configuration
+        const stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function (frame) {
+            console.log("Connected: " + frame);
+            document.getElementById("status").innerText = "Connected!"; // Display connection status
+            document.getElementById("sendButton").disabled = false; // Enable Send button
+
+            stompClient.subscribe('/topic/messages', function (message) {
+                const output = document.getElementById("output");
+                output.innerHTML += `<p>${message.body}</p>`; // Display received messages
+            });
+        }, function (error) {
+            console.error("Error during WebSocket connection:", error);
+            document.getElementById("status").innerText = "Connection failed. Please refresh."; // Display error
+        });
+
+        function sendMessage() {
+            if (stompClient && stompClient.connected) {
+                const message = document.getElementById("message").value;
+                stompClient.send("/app/send", {}, message); // Send message
+            } else {
+                console.error("STOMP client is not connected.");
+                alert("Connection not established. Please wait.");
+            }
+        }
+    </script>
+</body>
+</html>

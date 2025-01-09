@@ -11,12 +11,12 @@ import com.example.demo.Model.ChatMessage;
 
 @Controller
 public class ChatController {
-//	 @MessageMapping("/send")
-//	    @SendTo("/topic/messages") 
-//	    public String sendMessage(String message) {
-//		 System.out.println(message);
-//	        return "Broadcast: " + message;
-//	    }
+	 @MessageMapping("/send")
+	    @SendTo("/topic/messages") 
+	    public String sendMessage(String message) {
+		 System.out.println(message);
+	        return "Broadcast: " + message;
+	    }
 
     @GetMapping("/")
     public String home() {
@@ -35,4 +35,6 @@ public class ChatController {
 		public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
 			return chatMessage;
 		}
+		
+		
 }
